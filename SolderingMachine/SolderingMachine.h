@@ -8,11 +8,15 @@
 
 #include "Arduino.h"
 //INCLUDE OTHER LIBRARIES HERE
-#include <LiquidCrystal.h>
+//#include <LiquidCrystal.h>
 #include <Encoder.h>
 #include <Stepper.h>
 //This Library makes use of https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library for the I2C backpack
 //You will need to download it to make use of the functionality
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+//----------------- Declaring all Necessary Objects Here -----------------------------------
 
 
 class SolderingMachine
@@ -23,12 +27,12 @@ class SolderingMachine
                      int stepperMotorPinC1, int stepperMotorPinC2, int stepperMotorPinC3, int stepperMotorPinC4,
                      int servoMotorPin, int solderingInitButton, int menuRotar1, int menuRotar2,
                      int lcdSDA, int lcdSCl, int limiterA, int limiterB, int limiterC);
-
     void initAll();
     void initLCD();
     void initStepper(char whichStepper);
     void initServo();
     void boot();
+
   private:
     int stepperMotorPinA[4];
     int stepperMotorPinB[4];
@@ -43,7 +47,7 @@ class SolderingMachine
     int _stepperMotorPinB[4];
     int _stepperMotorPinC[4];
     void copyArray(int* src, int* dst, int len);
-    void createArray(int startingVal, int arrayLength, int* destination[]);
+    void createArray(int startingVal, int arrayLength, int* destination);
 };
 
 #endif

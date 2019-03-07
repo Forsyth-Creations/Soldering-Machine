@@ -6,6 +6,7 @@
 
 #include "Arduino.h"
 #include "SolderingMachine.h"
+LiquidCrystal_I2C lcd(0x27, 20, 4);
 
 SolderingMachine::SolderingMachine(int stepperMotorPinA1, int stepperMotorPinA2, int stepperMotorPinA3, int stepperMotorPinA4, int stepperMotorPinB1, int stepperMotorPinB2, int stepperMotorPinB3, int stepperMotorPinB4, int stepperMotorPinC1, int stepperMotorPinC2, int stepperMotorPinC3, int stepperMotorPinC4, int servoMotorPin, int solderingInitButton, int menuRotar1, int menuRotar2, int lcdSDA, int lcdSCl, int limiterA, int limiterB, int limiterC)
 {
@@ -35,11 +36,13 @@ void SolderingMachine::initAll() {
 }
 
 void SolderingMachine::initLCD() {
-
+  lcd.begin();
+  lcd.backlight();
+  lcd.print(" Soldering Station ");
 }
 
 void SolderingMachine::initServo() {
-
+  
 }
 
 void SolderingMachine::initStepper(char whichStepper) { //initializes one stepper motor using limiter switch
@@ -48,21 +51,18 @@ void SolderingMachine::initStepper(char whichStepper) { //initializes one steppe
   int startingValue = 0;
   switch (whichStepper) {
     case 'A':
-      startingValue = 4;
       Serial.println("A");
-      //memcpy(pins, _allPins, sizeof(_allPins[0]) * 4); //copies global variable values into pin value
-      limitSwitch = _limitSwitches[1];
+      createArray(0, 4, pins);
+      limitSwitch = _limitSwitches[3];
       break;
     case 'B':
-      startingValue = 8;
       Serial.println("B");
-      //memcpy(pins, _allPins, (sizeof(_allPins[0]) * 4) + 1); //copies global variable values into pin value
-      limitSwitch = _limitSwitches[2];
+      createArray(4, 4, pins);
+      limitSwitch = _limitSwitches[3];
       break;
     case 'C':
-      startingValue = 3;
-      createArray(startingValue, 4, pins[0]);
       Serial.println("C");
+      createArray(8, 4, pins);
       limitSwitch = _limitSwitches[3];
       break;
   }
@@ -78,6 +78,7 @@ void SolderingMachine::boot() {
   Serial.println("Beginning Boot Now");
   //delay(2000);
   listAllPins();
+
 }
 
 void SolderingMachine::listAllPins() {
@@ -100,10 +101,10 @@ void SolderingMachine::copyArray(int* src, int* dst, int len) {
   memcpy(dst, src, sizeof(src[0])*len);
 }
 
-void SolderingMachine::createArray(int startingVal, int arrayLength, int* destination[]) { //You need to feed this function the starting index, the amount of successive terms you want from the _allPins array, and the destination of the new pins
+void SolderingMachine::createArray(int startingVal, int arrayLength, int* destination) { //You need to feed this function the starting index, the amount of successive terms you want from the _allPins array, and the destination of the new pins
   Serial.println("Starting to Make Array");
-  for (int i = startingVal; i <= startingVal + arrayLength; i++) {
-    destination[i] = _allPins[i];
+  for (int i = 0; i <= arrayLength; i++) {
+    destination[i] = _allPins[startingVal + i];
     //Serial.println(_allPins[i]);
   }
 }
