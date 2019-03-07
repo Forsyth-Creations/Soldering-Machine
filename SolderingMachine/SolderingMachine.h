@@ -3,10 +3,17 @@
   Created by Robert Forsyth, March 4, 2019.
   Released into the public domain.
 */
-#ifndef Morse_h
-#define Morse_h
+#ifndef SolderingMachine_h
+#define SolderingMachine_h
 
 #include "Arduino.h"
+//INCLUDE OTHER LIBRARIES HERE
+#include <LiquidCrystal.h>
+#include <Encoder.h>
+#include <Stepper.h>
+//This Library makes use of https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library for the I2C backpack
+//You will need to download it to make use of the functionality
+
 
 class SolderingMachine
 {
@@ -21,13 +28,22 @@ class SolderingMachine
     void initLCD();
     void initStepper(char whichStepper);
     void initServo();
+    void boot();
   private:
     int stepperMotorPinA[4];
     int stepperMotorPinB[4];
     int stepperMotorPinC[4];
     int servoPin[2];
     int limitSwitches[3];
-    const int numberOfPinsUsed = 21;
+    int numberOfPinsUsed = 21;
+    int _allPins[21]; //remember to change both values, since the compiler doesn't like having these intermingle
+    void listAllPins();
+    int _limitSwitches[3];
+    int _stepperMotorPinA[4];
+    int _stepperMotorPinB[4];
+    int _stepperMotorPinC[4];
+    void copyArray(int* src, int* dst, int len);
+    void createArray(int startingVal, int arrayLength, int* destination[]);
 };
 
 #endif
