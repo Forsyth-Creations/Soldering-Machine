@@ -1,6 +1,6 @@
 #include "SolderingMachine.h"
 
-SolderingMachine MESASolderingMachine(2, 1, 3 , 4 , 5 , 6, 7, 8, 9 , 10, 11, 12, 13, 14 , 15 , 22 , 17 , 18 , 19 , 20 , 21);
+SolderingMachine MESASolderingMachine(11, 10, 9 , 8 , 7 , 6, 7, 8, 9 , 10, 11, 12, 22, 14 , 15 , 22 , 17 , 18 , 19 , 20 , 21);
 
 void setup() {
   Serial.begin(9600);
