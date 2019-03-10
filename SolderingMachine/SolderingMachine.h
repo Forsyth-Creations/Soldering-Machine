@@ -16,8 +16,6 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
-
-
 class SolderingMachine
 {
   public:
@@ -31,6 +29,9 @@ class SolderingMachine
     void initStepper(char whichStepper);
     void initServo();
     void boot();
+    int _stepperMotorPinA[4];
+    int _stepperMotorPinB[4];
+    int _stepperMotorPinC[4];
   private:
     int servoPin[2];
     int limitSwitches[3];
@@ -42,9 +43,10 @@ class SolderingMachine
     void createArray(int startingVal, int arrayLength, int* destination);
     boolean stepperCalibrate(Stepper &stepperToInit, int limitSwitchValue);
     int _solderServoPin;
-    int _stepperMotorPinA[4];
-    int _stepperMotorPinB[4];
-    int _stepperMotorPinC[4];
+    void initObjects();
+
 };
+
+//----------------- Declaring all Necessary Objects Here -------------------------
 
 #endif

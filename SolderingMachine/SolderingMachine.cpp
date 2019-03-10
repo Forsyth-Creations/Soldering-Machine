@@ -14,14 +14,12 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
-//----------------- Declaring all Necessary Objects Here -------------------------
 // ****************** ISSUE HERE *********************************
 LiquidCrystal_I2C lcd(0x27, 20, 4);
-Stepper stepperA(60,_stepperMotorPinA[0], _stepperMotorPinA[1], _stepperMotorPinA[2], _stepperMotorPinA[3]);
-Stepper stepperB(60,_stepperMotorPinB[0], _stepperMotorPinB[1], _stepperMotorPinB[2], _stepperMotorPinB[3]);
-Stepper stepperC(60,_stepperMotorPinC[0], _stepperMotorPinC[1], _stepperMotorPinC[2], _stepperMotorPinC[3]);
+Stepper stepperA(0,0,0,0,0);
+Stepper stepperB(0,0,0,0,0);
+Stepper stepperC(0,0,0,0,0);
 Servo solderServo;
-
 //--------------------------------------------------------------------------------
 
 SolderingMachine::SolderingMachine(int stepperMotorPinA1, int stepperMotorPinA2, int stepperMotorPinA3, int stepperMotorPinA4, int stepperMotorPinB1, int stepperMotorPinB2, int stepperMotorPinB3, int stepperMotorPinB4, int stepperMotorPinC1, int stepperMotorPinC2, int stepperMotorPinC3, int stepperMotorPinC4, int servoMotorPin, int solderingInitButton, int menuRotar1, int menuRotar2, int lcdSDA, int lcdSCl, int limiterA, int limiterB, int limiterC) {
@@ -46,7 +44,15 @@ SolderingMachine::SolderingMachine(int stepperMotorPinA1, int stepperMotorPinA2,
   _solderServoPin = _allPins[12];
 }
 
+void SolderingMachine::initObjects() {
+  //Toggle toggle = new Toggle[as];
+  *stepperA = Stepper(60, _stepperMotorPinA[0], _stepperMotorPinA[1], _stepperMotorPinA[2], _stepperMotorPinA[3]);
+  *stepperB = Stepper(60, _stepperMotorPinB[0], _stepperMotorPinB[1], _stepperMotorPinB[2], _stepperMotorPinB[3]);
+  *stepperC = Stepper(60, _stepperMotorPinC[0], _stepperMotorPinC[1], _stepperMotorPinC[2], _stepperMotorPinC[3]);
+}
+
 void SolderingMachine::initAll() {
+  initObjects();
   initLCD();
   initServo();
   initStepper('A');

@@ -5,8 +5,8 @@ SolderingMachine MESASolderingMachine(11, 10, 9 , 8 , 7 , 6, 7, 8, 9 , 10, 11, 1
 void setup() {
   Serial.begin(9600);
   //delay(1000);
-  MESASolderingMachine.boot();
   MESASolderingMachine.initAll();
+  MESASolderingMachine.boot();
 }
 
 void loop() {
